@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interactive Lazy Prim's Algorithm Visualization</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+<style>
+  #mst { position: absolute; top: 50px; left: 10px; width: 600px; height: 400px; }
+  #controls { position: absolute; top: 10px; left: 10px; }
+</style>
+</head>
+<body>
+<div id="controls">
+  <button onclick="startVisualization()">Start MST</button>
+  <button onclick="resetGraph()">Reset</button>
+  <input type="text" id="node1" placeholder="From Node">
+  <input type="text" id="node2" placeholder="To Node">
+  <input type="text" id="weight" placeholder="Weight">
+  <button onclick="addEdge()">Add Edge</button>
+</div>
+<div id="mst"></div>
+<script src="lazyPrims.js"></script>
+</body>
+</html>
