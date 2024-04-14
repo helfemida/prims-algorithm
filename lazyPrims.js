@@ -156,6 +156,7 @@ function completeMST() {
     nodes.forEach(node => {
         nodes.update({id: node.id, color: unvisitedColor});
     });
+    alert("MST is ready!")
 }
 
 function resetMST(){
