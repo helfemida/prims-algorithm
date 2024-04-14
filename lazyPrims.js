@@ -10,13 +10,13 @@ let unvisitedColor = "#00FF00";
 let currentColor = "#FFFF00"; 
 let visitedColor = "#FF0000"; 
 let mstColor = "#FF4500"; 
-let defaultEdgeColor = "#848484"; 
+let defaultEdgeColor = "#808080"; 
 let delay = 4000;
 let delayIncrement = 0;
 
 let options = {
   edges: {
-    color: { inherit: false }
+    color: { color: defaultEdgeColor }
   },
   nodes: {
     chosen: false 
@@ -98,7 +98,6 @@ function startVisualization() {
 
 function visit(nodeId) {
     visited.add(nodeId);
-    renderPriorityQueue();
 
     nodes.update({id: nodeId, color: currentColor});
 
@@ -131,7 +130,7 @@ function completeMST() {
         if (visited.has(edge.to)){
             nodes.update({id: edge.to, color: 'yellow'})
             console.log("cycle!")
-            renderPriorityQueue("cycle");
+            pqContainer.innerHTML = "Cycle between " + edge.from + " " + edge.to;
         }
 
         if (!visited.has(edge.from) || !visited.has(edge.to)) {
@@ -159,6 +158,18 @@ function completeMST() {
     });
 }
 
+function resetMST(){
+    edges.forEach(edge => {
+        edges.update({id: edge.id, color: {color: unvisitedColor, highlight: unvisitedColor}, chosen: false});
+    });
+    visited.clear();
+    priorityQueue = [];
+    document.getElementById('node1').value = '';
+    document.getElementById('node2').value = '';
+    document.getElementById('weight').value = '';
+    pqContainer.innerHTML = "Priority Queue:";
+}
+
 function resetGraph() {
     nodes.clear();
     edges.clear();
@@ -175,27 +186,7 @@ function resetGraph() {
     pqContainer.innerHTML = "Priority Queue:";
 }
 
-function stepThrough() {
-    if (priorityQueue.length === 0) {
-        alert("No more edges to process.");
-        return;
-    }
-    let edge = priorityQueue.shift();
-    let nextNode = visited.has(edge.from) ? edge.to : edge.from;
-    if (!visited.has(nextNode)) {
-        visit(nextNode);
-    }
-    network.selectEdges([edge.id]);
-    edges.update({id: edge.id, color: 'red'});
-    renderPriorityQueue();
-}
-
-function renderPriorityQueue(message) {
-    if(message == "cycle") {
-        pqContainer.innerHTML = "Cycle!";
-        return;
-    }
-
+function renderPriorityQueue() {
     pqContainer.innerHTML = "Priority Queue:<br>";
     priorityQueue.forEach(edge => {
         pqContainer.innerHTML += `Edge: ${edge.from}-${edge.to} Weight: ${parseFloat(edge.length)}<br>`;
