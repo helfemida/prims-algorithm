@@ -7,12 +7,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
 
 <style>
-  #mst { position: relative; left: 10px; width: 600px; height: 400px; }
-  #controls { position: absolute; top: 10px; left: 10px; }
-  #pq {display: flex; flex-direction: column; position: relative;  width: 600px; height: 400px;}
-  .mst-container {position: relative; display: flex; flex-direction: row; top: 50px;}
-  #start-node { width: 100px; height: 15px; position: relative; }
-  #newDiv {display: flex; flex-direction: column;}
+    #mst { width: 600px; height: 400px; border: 1px solid gray; }
+    #pq { width: 600px; height: 400px; overflow-y: auto; border: 1px solid blue; padding: 10px; }
+    .mst-container { display: flex; justify-content: space-between; padding: 10px; }
+    #controls { padding-bottom: 10px; }
+    input, button { margin-right: 10px; }
 </style>
 
 </head>
@@ -29,12 +28,10 @@
     <input type="text" id="weight" placeholder="Weight">
     <button onclick="addEdge()">Add Edge</button>
 </div>
-
 <div class="mst-container">
     <div id="mst"></div>
-    <div id="pq"></div>
+    <div id="pq">Priority Queue:</div>
 </div>
-
 <script src="lazyPrims.js"></script>
 </body>
 </html>
