@@ -5,10 +5,15 @@
 <title>Interactive Lazy Prim's Algorithm Visualization</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+
 <style>
-  #mst { position: absolute; top: 50px; left: 10px; width: 600px; height: 400px; }
+  #mst { position: relative; left: 10px; width: 600px; height: 400px; }
   #controls { position: absolute; top: 10px; left: 10px; }
+  #pq {display: flex; flex-direction: column; position: relative;  width: 600px; height: 400px;}
+  .mst-container {position: relative; display: flex; flex-direction: row; top: 50px;}
+  #start-node { width: 100px; height: 15px; position: relative; }
 </style>
+
 </head>
 <body>
 <div id="controls">
@@ -17,9 +22,16 @@
   <input type="text" id="node1" placeholder="From Node">
   <input type="text" id="node2" placeholder="To Node">
   <input type="text" id="weight" placeholder="Weight">
+
   <button onclick="addEdge()">Add Edge</button>
 </div>
-<div id="mst"></div>
+
+<div class="mst-container">
+    <input type="text" id="start-node" placeholder="Start node">
+    <div id="mst"></div>
+    <div id="pq"></div>
+</div>
+
 <script src="lazyPrims.js"></script>
 </body>
 </html>
