@@ -6,24 +6,27 @@ let visited = new Set();
 let container = document.getElementById('mst');
 let data = { nodes: nodes, edges: edges }; 
 let pqContainer = document.getElementById('pq');
-let unvisitedColor = "#800032"; 
-let currentColor = "#FFFF00"; 
-let visitedColor = "#FF0000"; 
-let mstColor = "#FF4500"; 
+
+let unvisitedColor = "#840434"; //default color
+let currentColor = "#f79902";  //yellow/orange
+let visitedColor = "#007533"; //green
+let mstColor = "#bd0449"; //kazirgi edge
 let defaultEdgeColor = "#808080"; 
+
 let delay = 3000;
 
 let options = {
   edges: {
-    color: { color: defaultEdgeColor }
+    color: { color: defaultEdgeColor },
+    width: 2
   },
   nodes: {
     chosen: false,
     font: {
         color: "white",
     },
-    border: "#5a0023",
-    borderWidth: 2
+    background: unvisitedColor,
+    shape: "circle"
   }
 };
 
@@ -62,7 +65,7 @@ function addEdge() {
             to: toNode, 
             label: weight, 
             id: fromNode + '-' + toNode, 
-            color: {color: defaultEdgeColor, highlight: '#ff0000'}, 
+            color: {color: defaultEdgeColor, highlight: defaultEdgeColor}, 
             chosen: false
         });
         if (network === null) {
@@ -80,17 +83,16 @@ function startVisualization() {
     }
     const startNodeID = document.getElementById('start-node').value.trim();
     if(startNodeID === ""){
-        alert("choose or enter the start node please!");
+        alert("Choose or enter the start node please!");
         return;
     }
     visited.clear();
     priorityQueue = [];
-    let startNode = nodes.get()[startNodeID];
-    if (startNode) {
         renderPriorityQueue();
+        nodes.update({id: startNodeID, color: currentColor});
         visit(startNodeID);
         completeMST();
-    }
+    
 }
 
 function visit(nodeId) {
@@ -114,6 +116,7 @@ function visit(nodeId) {
     });
 
     priorityQueue.sort((a, b) => a.length - b.length); 
+    nodes.update({id: nodeId, color: visitedColor});
     renderPriorityQueue();
 }
 
@@ -124,11 +127,6 @@ function completeMST() {
         let edge = priorityQueue.shift(); 
         let nextNode = visited.has(edge.from) ? edge.to : edge.from;
 
-        if (visited.has(edge.to)){
-            console.log("cycle!")
-            pqContainer.innerHTML = "Cycle between " + edge.from + " " + edge.to;
-        }
-
         if (!visited.has(edge.from) || !visited.has(edge.to)) {
             edges.update({id: edge.id, color: {color: mstColor, highlight: mstColor}, chosen: true});
 
@@ -138,6 +136,7 @@ function completeMST() {
             nodes.update({id: nextNode, color: currentColor});
     
             setTimeout(() => {
+                nodes.update({id: nextNode, color: currentColor});
                 visit(nextNode);
                 completeMST();
             }, delay);
@@ -153,6 +152,7 @@ function completeMST() {
         nodes.update({id: node.id, color: unvisitedColor});
     });
     alert("MST is ready!")
+    pqContainer.innerHTML = "We reached V-1 nodes"
 }
 
 function resetMST(){

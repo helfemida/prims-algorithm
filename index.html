@@ -8,8 +8,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
 
 <style>
-    #mst { width: 650px; height: 72vh; border: 1px solid gray; }
-    #pq { width: 650px; height: 72vh; overflow-y: auto; border: 1px solid blue; padding: 10px; }
+    #mst { width: 650px; height: 70vh; border: 1px solid gray; }
+    #pq { width: 650px; height: 70vh; overflow-y: auto; border: 1px solid blue; padding: 10px; }
     .mst-container { display: flex; justify-content: space-between; padding: 10px; }
     #controls { padding-bottom: 10px; }
     input, button { margin-right: 10px; }
@@ -27,7 +27,7 @@
               <p>The algorithm starts with an empty spanning tree. The idea is to maintain two sets of vertices. The first set contains the vertices already included in the MST, and the other set contains the vertices not yet included. At every step, it considers all the edges that connect the two sets and picks the minimum weight edge from these edges. After picking the edge, it moves the other endpoint of the edge to the set containing MST. </p>
             </div>
             <div class="description">
-              <h3>How does Prim`s Algorithn Work?</h3>
+              <h3>How does Prim`s Algorithm Work?</h3>
               <p><b>Step 1: </b>Determine an arbitrary vertex as the starting vertex of the MST.</p>
               <p><b>Step 2: </b>Follow steps 3 to 5 till there are vertices that are not included in the MST (known as fringe vertex).</p>
               <p><b>Step 3: </b>Find edges connecting any tree vertex with the fringe vertices.</p>
@@ -63,7 +63,7 @@
 
  </div>
 <footer>
-  SDU University || 2024 || Kaskelen
+  SDU University - 2024 - Kaskelen
 </footer>
 <script src="lazyPrims.js"></script>
 </body>
