@@ -11,8 +11,7 @@ let currentColor = "#FFFF00";
 let visitedColor = "#FF0000"; 
 let mstColor = "#FF4500"; 
 let defaultEdgeColor = "#808080"; 
-let delay = 4000;
-let delayIncrement = 0;
+let delay = 3000;
 
 let options = {
   edges: {
@@ -92,13 +91,12 @@ function startVisualization() {
     if (startNode) {
         visit(startNodeID);
         completeMST();
-        renderPriorityQueue();
     }
 }
 
 function visit(nodeId) {
+    renderPriorityQueue();
     visited.add(nodeId);
-
     nodes.update({id: nodeId, color: currentColor});
 
     console.log("Node " + nodeId + " is now visiting");
@@ -118,19 +116,21 @@ function visit(nodeId) {
     });
 
     priorityQueue.sort((a, b) => a.length - b.length); 
+    renderPriorityQueue();
 }
 
 function completeMST() {
+    renderPriorityQueue();
     let mstEdges = [];
     while (priorityQueue.length > 0) {
         let edge = priorityQueue.shift(); 
         let nextNode = visited.has(edge.from) ? edge.to : edge.from;
-        console.log("pq top: " + edge.to + "-" + edge.from + "len: " + edge.length)
 
         if (visited.has(edge.to)){
-            nodes.update({id: edge.to, color: 'yellow'})
+            nodes.update({id: edge.to, color: visitedColor})
             console.log("cycle!")
             pqContainer.innerHTML = "Cycle between " + edge.from + " " + edge.to;
+
         }
 
         if (!visited.has(edge.from) || !visited.has(edge.to)) {
@@ -144,7 +144,7 @@ function completeMST() {
             setTimeout(() => {
                 visit(nextNode);
                 completeMST();
-            }, 6000);
+            }, delay);
 
             edges.update({id: edge.id, color: {color: visitedColor, highlight: visitedColor}, chosen: true});
             return;
@@ -168,29 +168,35 @@ function resetMST(){
     document.getElementById('node1').value = '';
     document.getElementById('node2').value = '';
     document.getElementById('weight').value = '';
-    pqContainer.innerHTML = "Priority Queue:";
 }
 
 function resetGraph() {
-    nodes.clear();
-    edges.clear();
-    visited.clear();
-    priorityQueue = [];
-    if (network !== null) {
-        network.setData({nodes: nodes, edges: edges});
-    }
+    updateWebpage();
+
     document.getElementById('node1').value = '';
     document.getElementById('node2').value = '';
     document.getElementById('weight').value = '';
 
-    network.setData({nodes: new vis.DataSet(), edges: new vis.DataSet()});
-    pqContainer.innerHTML = "Priority Queue:";
+    visited.clear();
+    priorityQueue = [];
 }
+
+function updateWebpage() {
+
+    container = document.getElementById('mst');
+    pqContainer = document.getElementById('pq');
+
+    nodes.clear();
+    edges.clear();
+
+    network = new vis.Network(container, data, options);
+}
+
 
 function renderPriorityQueue() {
     pqContainer.innerHTML = "Priority Queue:<br>";
     priorityQueue.forEach(edge => {
-        pqContainer.innerHTML += `Edge: ${edge.from}-${edge.to} Weight: ${parseFloat(edge.length)}<br>`;
+        pqContainer.innerHTML += `Edge: ${edge.from}-${edge.to} | Weight: ${parseFloat(edge.length)}<br>`;
     });
 }
 
