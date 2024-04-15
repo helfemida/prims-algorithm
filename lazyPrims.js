@@ -33,8 +33,12 @@ function addEdge() {
     const toNode = document.getElementById('node2').value.trim();
     const weight = document.getElementById('weight').value.trim();
 
-    if (fromNode === "" || toNode === "" || weight === "" || isNaN(parseFloat(weight)) || parseFloat(weight) < 0) {
-        alert("Please fill in all fields correctly (weight must be a number or higher than 0)");
+    if (fromNode === "" || toNode === "" || weight === "" || isNaN(parseFloat(weight))) {
+        if(fromNode < 0 || toNode < 0){
+            alert("The nodes should be bigger than 0");
+            return;
+        }
+        alert("Please fill in all fields correctly (weight must be a number)");
         return;
     }
 
