@@ -10,8 +10,8 @@ let pqContainer = document.getElementById('pq');
 let unvisitedColor = "#840434"; //default color
 let currentColor = "#f79902";  //yellow/orange
 let visitedColor = "#007533"; //green
-let mstColor = "#bd0449"; //kazirgi edge
-let defaultEdgeColor = "#808080"; 
+let mstColor = "#bd0449"; 
+let defaultEdgeColor = "#808080";  //gray
 
 let delay = 3000;
 
@@ -26,7 +26,7 @@ let options = {
         color: "white",
     },
     background: unvisitedColor,
-    shape: "circle"
+    shape: "circle",
   }
 };
 
@@ -88,11 +88,10 @@ function startVisualization() {
     }
     visited.clear();
     priorityQueue = [];
-        renderPriorityQueue();
-        nodes.update({id: startNodeID, color: currentColor});
-        visit(startNodeID);
-        completeMST();
-    
+    renderPriorityQueue();
+    nodes.update({id: startNodeID, color: currentColor});
+    visit(startNodeID);
+    completeMST();
 }
 
 function visit(nodeId) {
@@ -180,7 +179,6 @@ function resetGraph() {
 }
 
 function updateWebpage() {
-
     container = document.getElementById('mst');
     pqContainer = document.getElementById('pq');
 
